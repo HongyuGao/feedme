@@ -55,6 +55,9 @@ public class User {
   // ------------------------
   // PUBLIC METHODS
   // ------------------------
+  public User(){
+	  
+  }
   
   public User(long id){
 	  this.id=id;
