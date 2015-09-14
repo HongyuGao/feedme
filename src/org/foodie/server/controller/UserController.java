@@ -21,32 +21,17 @@ public class UserController {
 	
   @Autowired
   private UserDao userDao;
-  /**
-   * /create  --> Create a new user and save it in the database.
-   * 
-   * @param email User's email
-   * @param name User's name
-   * @return A string describing if the user is successfully created or not.
-   */
+  
   @RequestMapping("/register")
   @ResponseBody
-  public String create(/*@RequestParam("email")String email, @RequestParam("password")String password, @RequestParam("firstname")String firstname, @RequestParam("firstname")String lastname, @RequestParam("title")String title*/) {
-    User user = null;
-    // test data
-    String email="u5526913@anu.edu.au";
-    String password="ldy002";
-    String firstname="danyang";
-    String lastname="li";
-    String title="miss";
-    		  		
+  public String create(@RequestParam("user")User newUser) {  		  		
     try {
-      user = new User(email, password, firstname,lastname,title);
-      userDao.save(user);
+      userDao.save(newUser);
     }
     catch (Exception ex) {
       return "Error creating the user: " + ex.toString();
     }
-    return "User succesfully created! (id = " + user.getId() + ")";
+    return "User succesfully created! (id = " + newUser.getId() + ")";
   }
   
   /**
@@ -57,11 +42,9 @@ public class UserController {
    */
   @RequestMapping("/delete")
   @ResponseBody
-  public String delete(/*@RequestParam("id")long id*/) {
+  public String delete(@RequestParam("id")long id) {
     try {
-    	//test data
-    	long id = 3;
-    	//
+    	
       User user = new User(id);
       userDao.delete(user);
     }
@@ -79,10 +62,7 @@ public class UserController {
    */
   @RequestMapping("/get-by-email")
   @ResponseBody
-  public String getByEmail(/*@RequestParam("email")String email*/) {
-	//test data
-	 String email = "u5526912@anu.edu.au";
-	 //
+  public String getByEmail(@RequestParam("email")String email) {
     String userId;
     try {
       User user = userDao.findOneByEmail(email);
@@ -109,15 +89,9 @@ public class UserController {
    */
   @RequestMapping("/update")
   @ResponseBody
-  public String updateUser(/*@RequestParam("id")long id, @RequestParam("email")String email*/) {
-	  //test data
-	  String email="test@gmail.com";
-	  long id = 1;
-	  //
+  public String updateUser(@RequestParam("user")User updatedUser) {
     try {
-      User user = userDao.findOne(id);
-      user.setEmail(email);
-      userDao.save(user);
+    	userDao.save(updatedUser);
     }
     catch (Exception ex) {
       return "Error updating the user: " + ex.toString();
