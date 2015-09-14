@@ -8,11 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.alibaba.druid.pool.DruidDataSource;
 
 /**
  * Contains database configurations.
@@ -20,7 +21,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author Danyang Li
  */
 @Configuration
-// classpath indicate the src folder
 @PropertySource("classpath:org/foodie/server/application.properties")
 @EnableTransactionManagement
 public class DatabaseConfig { 
@@ -34,16 +34,23 @@ public class DatabaseConfig {
 	private LocalContainerEntityManagerFactoryBean entityManagerFactory;
 
   /**
-   * DataSource definition for database connection. Settings are read from
-   * the application.properties file (using the env object).
+   * DataSource definition for database connection. Settings are read from the application.properties file (using the env object).
    */
   @Bean
   public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    //DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	  DruidDataSource dataSource = new DruidDataSource();
+	  
     dataSource.setDriverClassName(env.getProperty("db.driver"));
     dataSource.setUrl(env.getProperty("db.url"));
     dataSource.setUsername(env.getProperty("db.username"));
     dataSource.setPassword(env.getProperty("db.password"));
+    
+    dataSource.setInitialSize(Integer.parseInt(env.getProperty("Druid.initialSize")));
+    dataSource.setMinIdle(Integer.parseInt(env.getProperty("Druid.minIdle")));
+    dataSource.setMaxActive(Integer.parseInt(env.getProperty("Druid.maxActive")));
+    dataSource.setPoolPreparedStatements(Boolean.parseBoolean(env.getProperty("Druid.poolPreparedStatements")));
+    
     return dataSource;
   }
 
@@ -61,6 +68,7 @@ public class DatabaseConfig {
     
     // Vendor adapter
     HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    vendorAdapter.setGenerateDdl(true);
     entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
     
     // Hibernate properties
@@ -94,4 +102,4 @@ public class DatabaseConfig {
     return new PersistenceExceptionTranslationPostProcessor();
   }
 
-} // class DatabaseConfig
+}

@@ -1,7 +1,8 @@
 package org.foodie.server.controller;
 
-import org.foodie.server.dao.UserDao;
 import org.foodie.server.entity.User;
+import org.foodie.server.service.UserService;
+import org.foodie.server.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	
   @Autowired
-  private UserDao userDao;
-  
+  private UserService userService;
+
   @RequestMapping("/register")
   @ResponseBody
   public String create(@RequestParam("user")User newUser) {  		  		
     try {
-      userDao.save(newUser);
+      userService.create(newUser);
     }
     catch (Exception ex) {
       return "Error creating the user: " + ex.toString();
@@ -34,19 +35,13 @@ public class UserController {
     return "User succesfully created! (id = " + newUser.getId() + ")";
   }
   
-  /**
-   * /delete  --> Delete the user having the passed id.
-   * 
-   * @param id The id of the user to delete
-   * @return A string describing if the user is succesfully deleted or not.
-   */
   @RequestMapping("/delete")
   @ResponseBody
-  public String delete(@RequestParam("id")long id) {
+  public String delete(/*@RequestParam("id")long id*/) {
     try {
-    	
+    	long id = 6;
       User user = new User(id);
-      userDao.delete(user);
+      userService.remove(user);
     }
     catch (Exception ex) {
       return "Error deleting the user:" + ex.toString();
@@ -54,18 +49,12 @@ public class UserController {
     return "User succesfully deleted!";
   }
   
-  /**
-   * /get-by-email  --> Return the id for the user having the passed email.
-   * 
-   * @param email The email to search in the database.
-   * @return The user id or a message error if the user is not found.
-   */
   @RequestMapping("/get-by-email")
   @ResponseBody
   public String getByEmail(@RequestParam("email")String email) {
     String userId;
     try {
-      User user = userDao.findOneByEmail(email);
+      User user = userService.query(email);
       userId = String.valueOf(user.getId());
     }
     catch (Exception ex) {
@@ -74,24 +63,11 @@ public class UserController {
     return "The user id is: " + userId;
   }
   
-  
-  
-  
-  
-  /**
-   * /update  --> Update the email and the name for the user in the database 
-   * having the passed id.
-   * 
-   * @param id The id for the user to update.
-   * @param email The new email.
-   * @param name The new name.
-   * @return A string describing if the user is succesfully updated or not.
-   */
   @RequestMapping("/update")
   @ResponseBody
   public String updateUser(@RequestParam("user")User updatedUser) {
     try {
-    	userDao.save(updatedUser);
+    	userService.update(updatedUser);
     }
     catch (Exception ex) {
       return "Error updating the user: " + ex.toString();
@@ -99,4 +75,4 @@ public class UserController {
     return "User succesfully updated!";
   }
 
-} // class UserController
+}
