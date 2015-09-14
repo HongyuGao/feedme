@@ -33,8 +33,8 @@ public class UserController {
   public String create(/*@RequestParam("email")String email, @RequestParam("password")String password, @RequestParam("firstname")String firstname, @RequestParam("firstname")String lastname, @RequestParam("title")String title*/) {
     User user = null;
     // test data
-    String email="u5526912@anu.edu.au";
-    String password="ldy001";
+    String email="u5526913@anu.edu.au";
+    String password="ldy002";
     String firstname="danyang";
     String lastname="li";
     String title="miss";
@@ -57,8 +57,11 @@ public class UserController {
    */
   @RequestMapping("/delete")
   @ResponseBody
-  public String delete(@RequestParam("id")long id) {
+  public String delete(/*@RequestParam("id")long id*/) {
     try {
+    	//test data
+    	long id = 3;
+    	//
       User user = new User(id);
       userDao.delete(user);
     }
@@ -76,7 +79,10 @@ public class UserController {
    */
   @RequestMapping("/get-by-email")
   @ResponseBody
-  public String getByEmail(String email) {
+  public String getByEmail(/*@RequestParam("email")String email*/) {
+	//test data
+	 String email = "u5526912@anu.edu.au";
+	 //
     String userId;
     try {
       User user = userDao.findOneByEmail(email);
@@ -87,6 +93,10 @@ public class UserController {
     }
     return "The user id is: " + userId;
   }
+  
+  
+  
+  
   
   /**
    * /update  --> Update the email and the name for the user in the database 
@@ -99,7 +109,11 @@ public class UserController {
    */
   @RequestMapping("/update")
   @ResponseBody
-  public String updateUser(@RequestParam("id")long id, @RequestParam("email")String email) {
+  public String updateUser(/*@RequestParam("id")long id, @RequestParam("email")String email*/) {
+	  //test data
+	  String email="test@gmail.com";
+	  long id = 1;
+	  //
     try {
       User user = userDao.findOne(id);
       user.setEmail(email);
@@ -111,8 +125,4 @@ public class UserController {
     return "User succesfully updated!";
   }
 
-  // ------------------------
-  // PRIVATE FIELDS
-  // ------------------------
-  
 } // class UserController
