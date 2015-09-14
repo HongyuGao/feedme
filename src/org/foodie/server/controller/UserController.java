@@ -1,12 +1,18 @@
 package org.foodie.server.controller;
 
+import org.apache.log4j.Logger;
 import org.foodie.server.dao.UserDao;
 import org.foodie.server.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
+
 
 
 /**
@@ -21,6 +27,12 @@ public class UserController {
 	
   @Autowired
   private UserDao userDao;
+  @Autowired
+  Gson gson;
+  
+//  Logger.getLogger(UserController.class.getName());
+  private static Logger log = Logger.getLogger(UserController.class.getName());
+  
   /**
    * /create  --> Create a new user and save it in the database.
    * 
@@ -77,21 +89,23 @@ public class UserController {
    * @param email The email to search in the database.
    * @return The user id or a message error if the user is not found.
    */
-  @RequestMapping("/get-by-email")
-  @ResponseBody
-  public String getByEmail(/*@RequestParam("email")String email*/) {
-	//test data
-	 String email = "u5526912@anu.edu.au";
-	 //
-    String userId;
+  @RequestMapping(value = "/get-by-email/{email}", method=RequestMethod.GET)
+  public String getByEmail(@PathVariable String email) {
+	  log.info(email);
     try {
       User user = userDao.findOneByEmail(email);
-      userId = String.valueOf(user.getId());
+      return gson.toJson(user);
+      
+  	//convert the json string back to object
+    // DataObject obj = gson.fromJson(br, DataObject.class);
+  	// convert java object to JSON format,
+  	// and returned as JSON formatted string
+
     }
     catch (Exception ex) {
-      return "User not found";
+      log.error(ex);
+      return null;
     }
-    return "The user id is: " + userId;
   }
   
   
