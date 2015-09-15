@@ -70,7 +70,6 @@ public class UserController {
     }
     return "User succesfully deleted!";
   }
-  
   /**
    * /get-by-email  --> Return the id for the user having the passed email.
    * 
