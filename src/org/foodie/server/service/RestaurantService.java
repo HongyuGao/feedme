@@ -14,7 +14,6 @@ public interface RestaurantService {
 	public void remove(Restaurant removedRestaurant);
 	public void update(Restaurant updatedRestaurant);
 	public List<Restaurant> query();
-
 }
 
 
