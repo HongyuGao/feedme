@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="Restaurant")
 public class Restaurant {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private long id;
 	
@@ -35,6 +35,14 @@ public class Restaurant {
 	@Column(name="email")
 	private String email;
 
+	public Restaurant(){
+		
+	}
+	
+	public Restaurant(long id){
+		this.id=id;
+	}
+	
 	public long getId() {
 		return id;
 	}
