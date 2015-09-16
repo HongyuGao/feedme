@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!-- meta must be above <title> -->
+		<title>Sign Up</title>
+		<script src="js/webjars/jquery/jquery.js"></script>
+		<script src="js/users/user.js"></script>
+		<script>	
+			function emailVal(param){
+				var value=JQuery.trim(param.value);
+				if(value==""){
+					validationInfo("eVal","Email can't be blank");
+					//document.getElementById("eVal").style.display="block";
+					//document.getElementById("eval").innerHTML="Email can't be blank";
+					//Password doesn't match the confirmation
+					//Password is too short (minimum is 7 characters) and needs at least one lowercase letter
+				}
+				else{
+					reg=/^([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/gi;
+					if(!reg.test(value)){
+						validationInfo("eVal","Email is invalid");
+						//document.getElementById("eVal").style.display="block";
+						//document.getElementById("eval").innerHTML="Email is invalid";						
+					}
+					else{
+						validationInfo("eVal","Email is already taken");
+					}
+				}
+				
+			function validationInfo(disDiv,disInfo){
+				document.getElementById(disDiv).style.display="block";
+				document.getElementById(disDiv).innerHTML=disInfo;						
+			}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td>Title</td>
+				<td><select id="title"><option>Mr</option><option>Miss</option><option>Mrs</option><option>Ms</option></select></td>
+			</tr>
+			<tr>
+				<td>First name:</td>
+				<td><input type="text"  id="fname" name="fname"/></td>
+			</tr>
+			<tr>
+				<td>Last name:</td>
+				<td><input type="text"  id="lname" name="lname"></td>
+			</tr>
+			<tr>
+				<td>Email:</td>
+				<td><input type="email"  id="email" name="email" onblur="emailVal(this)"/></td>
+				<td><div id="eVal" style="color:red;"></div></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password"  id="pwd" name="pwd"></td>
+			</tr>
+			<tr>
+				<td>Confirm password:</td>
+				<td><input type="password"  id="cpwd" name="cpwd"></td>
+			</tr>
+			<tr>
+				<td>Birthday:</td>
+				<td><input type="date" id="bod" name="bod"></td>
+			</tr>
+			<tr>
+				<td>Phone number:</td>
+				<td><input type="tel" id="tel" name="tel"></td>
+			</tr>
+			<tr>
+				<td>Preferred language:</td>
+				<td><select id="pl"><option>English</option><option>Chinese</option><option>Japanese</option><option>Korean</option></select></td>
+			</tr>
+		</table>
+		<button onclick="createUser()">Submit</button>		
+	</body>
+</html>
