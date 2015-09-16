@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.foodie.server.dao.UserDao;
 import org.foodie.server.entity.User;
 import org.foodie.server.service.UserService;
-import org.foodie.server.service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,18 +77,12 @@ public class UserController {
    */
 
   @RequestMapping(value = "/get-by-email/{email}", method=RequestMethod.GET)
-  public String getByEmail(@PathVariable String email) {
+  public User getByEmail(@PathVariable String email) {
 	  log.info(email);
-
     try {
       User user = userDao.findOneByEmail(email);
-      return gson.toJson(user);
-      
-  	//convert the json string back to object
-    // DataObject obj = gson.fromJson(br, DataObject.class);
-  	// convert java object to JSON format,
-  	// and returned as JSON formatted string
-
+      //return gson.toJson(user);
+      return user;
     }
     catch (Exception ex) {
       log.error(ex);

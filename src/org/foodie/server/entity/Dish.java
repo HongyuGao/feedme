@@ -12,10 +12,10 @@ import javax.persistence.Table;
 public class Dish {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="dish_id")
+	@Column(name="dishId", nullable=false)
 	private long id;
 	
-	@Column(name="shop_id",nullable=false)
+	@Column(name="shopId")
 	private long shopId;
 	
 	@Column(name="type")
@@ -24,18 +24,27 @@ public class Dish {
 	@Column(name="name")
 	private String name;
 	
+	@Column(name="description")
+	private String description;
+	
 	@Column(name="photo")
 	private String photo;
+		
+	@Column(name="ingredient")
+	private String ingredient;
 	
 	@Column(name="price")
 	private String price;
+	
+	@Column(name="discount")
+	private String discount;
 	
 	public Dish(){
 		
 	}
 	
 	public Dish(long id){
-		
+		this.id=id;
 	}
 	
 	public long getId() {
@@ -109,15 +118,5 @@ public class Dish {
 	public void setDiscount(String discount) {
 		this.discount = discount;
 	}
-
-	@Column(name="description")
-	private String description;
-	
-	@Column(name="ingredient")
-	private String ingredient;
-	
-	@Column(name="discount")
-	private String discount
-;
 
 }
