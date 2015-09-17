@@ -65,24 +65,43 @@ function signUp() {
 	var tel=document.getElementById("tel");	
 	emailVal(email);
 	if(emailValidate==true&&emptyVal(fname)&&emptyVal(lname)&&emptyVal(pwd)&&emptyVal(tel)&&pwdVal(cpwd)){
-		var hashpwd=md5(pwd);
+		var hashpwd=md5(pwd.value);
 		var user=new Object();
-		user.email=email.value;
-		user.firstname=fname.value;
-		user.lastname=lname.value;
+		user.email=jQuery.trim(email.value);
+		user.firstname=jQuery.trim(fname.value);
+		user.lastname=jQuery.trim(lname.value);
 		user.title=titleValue;
 		user.birthday=bodValue;
 		user.password=hashpwd;
-		user.phoneNumber= tel.value;
+		user.phoneNumber= jQuery.trim(tel.value);
 		user.preferedLanguage=plValue;
 		var postData = JSON.stringify(user);
-		restSet("/users/register", "POST", postData, renderSignUp,"#signInfo");
+		restSet("/users/register", POST_METHOD, postData, renderSignUp,"#signInfo");
 	}
 	else{
 		var errorInfo="There were problems creating your account";
 		validationInfo("signInfo",errorInfo);
 	}    
 }
+
+/**GET**/
+function signIn() {
+	console.log("enterSignIn");
+    var userEmail = jQuery.trim(jQuery("#inputEmail").val());
+    var password = jQuery.trim(jQuery("#inputPassword").val());
+    if(userEmail!=""&&password!=""){
+    	console.log(userEmail);   	
+    	var hashPassword = md5(password);
+    	console.log(hashPassword);
+        //var url = ATUP_USER_URI + SIGNIN_PATH + "?user=" + userName + "&password=" + hashPassword;
+        restGet("/users/login?email=" + userEmail + "&pwd=" + hashPassword, GET_METHOD, renderSignIn,"#resultDiv");
+    }
+    else{
+    	validationInfo("resultDiv","Username and password can't be empty");
+    }
+    
+}
+
 /*PUT*/
 function updateUser() {
     var userName = jQuery.trim(jQuery("#userName").val());
@@ -92,32 +111,42 @@ function updateUser() {
     var putData = JSON.stringify({userName: userName, passWord: hashPassword, userRole: userRole});
     restSet(ATUP_USER_URI + USER_PATH, PUT_METHOD, putData, renderUpdate);
 }
-/*GET*/
-function signIn() {
-    var userName = jQuery("#userName").val();
-    var password = jQuery.trim(jQuery("#password").val());
-    var hashPassword = md5(password);
-    var url = ATUP_USER_URI + SIGNIN_PATH + "?user=" + userName + "&password=" + hashPassword;
-    restGet(url, GET_METHOD, renderSignIn);
-}
+
 /*RENDER*/
 function renderEmailCheck(data){
-	if(data.errorInfo=="N"){
+	if(data.statusInfo=="N"){
 		emailValidate=false;
 		validationInfo(email.name,"Email is already token");
-	}else if(data.errorInfo=="Y"){
+	}else if(data.statusInfo=="Y"){
 		emailValidate=true;
 		validationInfo(email.name,"");
 	}else{
 		emailValidate=false;
 		validationInfo(email.name,"Unkown Error");
-	}
-	
+	}	
 }
 
 function renderSignUp(data) {
-    jQuery("#signInfo").html("id=" + data.userId);
+    jQuery("#signInfo").html(data.statusInfo);
+    window.location.href = "signUp.html";
 }
+
+function renderSignIn(data) {
+	console.log("enter renderSignIn");
+    if (data.statusInfo=="Y") {
+    	validationInfo("resultDiv","Success");
+    	console.log("enter renderSignIn If branch");
+        storage.setItem("userId", data.id);
+        storage.setItem("userName", data.firstname);
+        storage.setItem("userRole", data.lastname);
+        window.location.href = "index.html";
+    }else if(data.statusInfo=="N"){
+    	validationInfo("resultDiv","Incorrect email address or password"); 
+    }else{
+    	//need error page
+    }
+}
+
 function renderUpdate(data) {
     var usersDiv = jQuery("#usersDiv");
     usersDiv.html("<div><span style='width:100px;display:inline-block;'>User ID</span>");
@@ -130,14 +159,4 @@ function renderUpdate(data) {
     usersDiv.append("</span><span style='width:100px;display:inline-block;'>");
     usersDiv.append(data.userRole);
     usersDiv.append("</span></div>");
-}
-function renderSignIn(data) {
-    if (data.userId != null && data.userName != null && data.userRole != null) {
-        storage.setItem("userId", data.userId);
-        storage.setItem("userName", data.userName);
-        storage.setItem("userRole", data.userRole);
-        window.location.href = "index.html";
-    } else {
-        //TODO
-    }
 }

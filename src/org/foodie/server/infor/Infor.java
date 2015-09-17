@@ -9,24 +9,24 @@ import java.io.Serializable;
  */
 public class Infor implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private String errorInfo;
-	private Integer statusCode = ErrorCode.NONE;
+	private String statusInfo;
+	private Integer statusCode = StatusCode.NORMAL;
 	
 	public Infor() {
 		
 	}
 	
 	public Infor (final String errorInfo, final Integer statusCode) {
-		this.errorInfo = errorInfo;
+		this.statusInfo = errorInfo;
 		this.statusCode = statusCode;
 	}
 	
-	public String getErrorInfo() {
-		return errorInfo;
+	public String getStatusInfo() {
+		return statusInfo;
 	}
 
-	public void setErrorInfo(String errorInfo) {
-		this.errorInfo = errorInfo;
+	public void setStatusInfo(String errorInfo) {
+		this.statusInfo = errorInfo;
 	}
 
 	public Integer getStatusCode() {

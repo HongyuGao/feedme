@@ -1,5 +1,5 @@
 // Host IP address
-const FEEDME_USER_HOST="http://localhost:8080/";
+const TEXT_HOST="http://localhost:8080/";
 
-
+const PICTURE_HOST="http://localhost:8080";
 // Resource base URI
