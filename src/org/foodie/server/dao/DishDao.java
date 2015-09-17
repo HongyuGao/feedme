@@ -13,7 +13,9 @@ import org.springframework.data.repository.CrudRepository;
  */
 @Transactional
 public interface DishDao extends CrudRepository<Dish,Long> {
-	List<Dish> findByShopId(long shop_id);	
+
+	List<Dish> findByShopId(long shop_id);
+
 }
 
 
