@@ -21,6 +21,8 @@ public class DishController {
 	
 	private static Logger log = Logger.getLogger(UserController.class.getName());
 	
+	
+	
 	@RequestMapping("/newdish")
 	@ResponseBody
 	public String create(@RequestParam("dish")Dish newdish){		
@@ -58,8 +60,10 @@ public class DishController {
 	
 	@RequestMapping("/query")
 	@ResponseBody
-	public List<Dish> query(@RequestParam("shop_id")long shopid){
+	public List<Dish> query(/*@RequestParam("shop_id")long shopid*/){
 		List<Dish> dishes =null;
+		//test data
+		long shopid = 2;
 		try{
 			dishes = dishService.query(shopid);
 		}catch(Exception e){

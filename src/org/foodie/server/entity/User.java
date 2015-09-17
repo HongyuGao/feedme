@@ -18,39 +18,39 @@ import javax.persistence.Table;
 public class User {
 
   @Id
-  @Column(nullable=false,unique=true)
+  @Column(name="id", nullable=false,unique=true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   
-  @Column(nullable=false)
-  private String email;
-  
-  @Column(nullable=false)
+  @Column(name="firstname", nullable=false)
   private String firstname;
-
-  @Column(nullable=false)
-  private String lastname;
-
-  @Column
-  private String title;
   
-  @Column
+  @Column(name="lastname", nullable=false)
+  private String lastname;
+  
+  @Column(name="birthday")
   private Date birthday;
   
-  @Column
+  @Column(name="password")
   private String password;
- 
-  @Column
+  
+  @Column(name="registerTime")
   private Date register_time;
   
-  @Column
-  private String prefer_langugae;
- 
-  @Column
+  @Column(name="preferedLanguage")
+  private String preferedLanguage;
+  
+  @Column(name="photo")
   private String photo;
   
-  @Column
+  @Column(name="phoneNumber")
   private String phoneNumber;
+  
+  @Column(name="email", nullable=false)
+  private String email;
+
+  @Column(name="title")
+  private String title;
 
   // ------------------------
   // PUBLIC METHODS
@@ -120,12 +120,12 @@ public void setRegister_time(Date register_time) {
 	this.register_time = register_time;
 }
 
-public String getPrefer_langugae() {
-	return prefer_langugae;
+public String getPreferedLanguage() {
+	return preferedLanguage;
 }
 
-public void setPrefer_langugae(String prefer_langugae) {
-	this.prefer_langugae = prefer_langugae;
+public void setPreferedLanguage(String prefer_language) {
+	this.preferedLanguage = prefer_language;
 }
 
 public String getPhoto() {

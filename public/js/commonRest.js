@@ -1,3 +1,6 @@
+/**
+ * @author Danyang Li
+ */
 var storage = window.sessionStorage;
 
 var TEST_SUITE_PATH = "/testsuites";
@@ -8,9 +11,6 @@ var TEST_JOB_PATH = "/testjobs";
 var USER_PATH = "/users";
 var DEVICE_PATH = "/devices";
 var SIGNIN_PATH = "/users/signin";
-
-
-
 
 var NO_RESULT = "There's no result from the server";
 
@@ -34,21 +34,18 @@ var DEVICE_STATUS_ERROR = "2";
 
 var NORMAL_STATUS = 9200;
 var LOADING = "Loading...";
-function restGet(restUrl, httpMethod, callback) {
-    rest(restUrl, httpMethod, "", "application/json", "json", callback);
+function restGet(restUrl, httpMethod, callback,resultDiv) {
+    rest(restUrl, httpMethod, "", "application/json", "json", callback, resultDiv);
 }
 
-function restSet(restUrl, httpMethod, entity, callback) {
-    rest(restUrl, httpMethod, entity, "application/json", "json", callback);
+function restSet(restUrl, httpMethod, entity, callback, resultDiv) {
+    rest(restUrl, httpMethod, entity, "application/json", "json", callback, resultDiv);
 }
 
-function rest(restUrl, httpMethod, entity, contentType, dataType, callback) {
-    var resultLine = jQuery('#resultDiv');
+function rest(restUrl, httpMethod, entity, contentType, dataType, callback, resultDiv) {
+    var resultLine = jQuery(resultDiv);
     resultLine.html(LOADING);
-    var userId = storage.getItem("userId");
-    var userRole = storage.getItem("userRole");
-    var request = jQuery.ajax({type: httpMethod, url: restUrl, headers: {'Atup-User': userId, 'Atup-UserRole': userRole}, data: entity, contentType: contentType, dataType: dataType,
-        crossDomain: true});//'Access-Control-Allow-Origin': '*',
+    var request = jQuery.ajax({type: httpMethod, url: restUrl, data: entity, contentType: contentType, dataType: dataType});
     request.done(function (data) {
         try {
             if (data === null || data === undefined) {
