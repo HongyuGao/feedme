@@ -1,25 +1,18 @@
 package org.foodie.server.controller;
-
 import org.apache.log4j.Logger;
-import org.foodie.server.dao.UserDao;
 import org.foodie.server.entity.User;
+import org.foodie.server.infor.ErrorCode;
+import org.foodie.server.infor.Infor;
 import org.foodie.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
-
-
-
 /**
- * A class to test interactions with the MySQL database using the UserDao class.
- *
- * 
+ * A class to test interactions with the MySQL database using the UserService class.
  * @author Danyang Li
  */
 @RestController
@@ -28,25 +21,34 @@ public class UserController {
 	
   @Autowired
   private UserService userService;
-  private UserDao userDao;
-
-  @Autowired
-  Gson gson;
   
-//  Logger.getLogger(UserController.class.getName());
   private static Logger log = Logger.getLogger(UserController.class.getName());
   
-  /**
-   * /create  --> Create a new user and save it in the database.
-   * 
-   * @param email User's email
-   * @param name User's name
-   * @return A string describing if the user is successfully created or not.
-   */
-
-  @RequestMapping("/register")
+  @RequestMapping("/checkEmail")
   @ResponseBody
-  public String create(@RequestParam("user")User newUser) {  		  		
+  public Infor checkEmail(@RequestParam("email")String email){
+	  Infor infor=new Infor();
+	  try{
+		  User user = userService.query(email);
+		  if (user==null){
+			  infor.setErrorInfo("Y");
+			  infor.setStatusCode(ErrorCode.NONE);
+			  return infor;
+		  }else{
+			  infor.setErrorInfo("N");
+			  infor.setStatusCode(ErrorCode.NONE);
+			  return infor;
+		  }
+	  }catch(Exception e){
+		  infor.setErrorInfo("");
+		  infor.setStatusCode(ErrorCode.PERSIST_ERROR);
+		  return infor;
+	  }
+  }
+  
+  @RequestMapping(value="/register", method=RequestMethod.POST)
+  @ResponseBody
+  public String create(@RequestBody User newUser) {  		  		
     try {
       userService.create(newUser);
     }
@@ -76,13 +78,14 @@ public class UserController {
    * @return The user id or a message error if the user is not found.
    */
 
-  @RequestMapping(value = "/get-by-email/{email}", method=RequestMethod.GET)
-  public User getByEmail(@PathVariable String email) {
+  @RequestMapping("getByEmail")
+  @ResponseBody
+  public User getByEmail(/*@RequestParam("email")String email*/) {
+	  String email="u5526912@anu.edu.au";
 	  log.info(email);
     try {
-      User user = userDao.findOneByEmail(email);
-      //return gson.toJson(user);
-      return user;
+    	User user = userService.query(email);
+    	return user;
     }
     catch (Exception ex) {
       log.error(ex);

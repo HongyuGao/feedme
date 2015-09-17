@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
  */
 //@Service
 public interface UserService {	
-	public String create(User newUser);
-	public String remove(User removedUser);
-	public String update(User updatedUser);
+	public void create(User newUser);
+	public void remove(User removedUser);
+	public void update(User updatedUser);
 	public User query(String field);
 
 }

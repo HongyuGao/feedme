@@ -4,7 +4,6 @@ import org.foodie.server.dao.UserDao;
 import org.foodie.server.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -17,27 +16,23 @@ public class UserServiceImp implements UserService {
 	  private UserDao userDao;
 
 	@Override
-	public String create(User newUser) {
+	public void create(User newUser) {
 		userDao.save(newUser);
-		return null;
 	}
 
 	@Override
-	public String remove(User removedUser) {
+	public void remove(User removedUser) {
 		userDao.delete(removedUser);
-		return null;
 	}
 
 	@Override
-	public String update(User updatedUser) {
+	public void update(User updatedUser) {
 		userDao.save(updatedUser);
-		return null;
 	}
 
 	@Override
 	public User query(String field) {
-		userDao.findOneByEmail(field);
-		return null;
+		return userDao.findOneByEmail(field);
 	}
 	
 	
