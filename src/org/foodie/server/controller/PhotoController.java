@@ -1,28 +1,13 @@
 
 
 package org.foodie.server.controller;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.RandomAccessFile;
 import java.util.Date;
-import java.util.List;
 
-import javax.servlet.ServletContext;
-
-import org.apache.catalina.connector.Request;
 import org.foodie.server.service.Photo;
 import org.foodie.server.service.PhotoMetadata;
 import org.foodie.server.service.PhotoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.Headers;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * 
+ * @author wangfei
+ *
+ */
 
 @RestController
 @RequestMapping("/data")
