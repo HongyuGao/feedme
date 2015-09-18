@@ -1,8 +1,5 @@
-
-
 package org.foodie.server.controller;
 import java.util.Date;
-
 import org.foodie.server.service.Photo;
 import org.foodie.server.service.PhotoMetadata;
 import org.foodie.server.service.PhotoService;
@@ -64,15 +61,7 @@ public class PhotoController {
      * @param person The name of the uploading person
      * @param date The date of the document
      * @return A list of document meta data
-     */
-//    @RequestMapping(value = "/documents", method = RequestMethod.GET)
-//    public HttpEntity<List<PhotoMetadata>> findDocument(
-//            @RequestParam(value="person", required=false) String person,
-//            @RequestParam(value="date", required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        return new ResponseEntity<List<PhotoMetadata>>(getArchiveService().findDocuments(person,date), httpHeaders,HttpStatus.OK);
-//    }
-    
+     */    
     @RequestMapping(value="/img/{id}", method=RequestMethod.GET, produces = "image/png")
     public @ResponseBody byte[]  getImage(@PathVariable("id") String id){
     	HttpHeaders httpHeaders = new HttpHeaders();
@@ -81,7 +70,6 @@ public class PhotoController {
         byte[] res = getArchiveService().getDocumentFile(id);
         System.out.println("Return result of image: "+res);
         return res;
-       // return new ResponseEntity<byte[]>(getArchiveService().getDocumentFile(id), httpHeaders, HttpStatus.OK);
     }
 
     public PhotoService getArchiveService() {
@@ -91,17 +79,4 @@ public class PhotoController {
     public void setArchiveService(PhotoService archiveService) {
         this.archiveService = archiveService;
     }
-//    	ResponseEntity res = null;
-//            try {
-//            	RandomAccessFile f = new RandomAccessFile("", "r");
-//            	ServletContext.getRealPath("/");
-//            	byte[] b = new byte[(int)f.length()];
-//            	f.readFully(b);
-//            	final HttpHeaders headers = new HttpHeaders();
-//            	headers.setContentType(MediaType.IMAGE_PNG);
-//            	res =  new ResponseEntity<byte[]> (b, headers, HttpStatus.CREATED);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        return res;
-    }
+ }

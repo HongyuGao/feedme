@@ -1,8 +1,9 @@
 package org.foodie.server.controller;
 import org.apache.log4j.Logger;
 import org.foodie.server.entity.User;
-import org.foodie.server.infor.ErrorCode;
+import org.foodie.server.infor.StatusCode;
 import org.foodie.server.infor.Infor;
+import org.foodie.server.infor.UserInfo;
 import org.foodie.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 /**
- * A class to test interactions with the MySQL database using the UserService class.
  * @author Danyang Li
  */
 @RestController
@@ -27,35 +27,56 @@ public class UserController {
   @RequestMapping("/checkEmail")
   @ResponseBody
   public Infor checkEmail(@RequestParam("email")String email){
-	  Infor infor=new Infor();
+	  Infor result=new Infor();
 	  try{
-		  User user = userService.query(email);
+		  User user = userService.query(email.trim());
 		  if (user==null){
-			  infor.setErrorInfo("Y");
-			  infor.setStatusCode(ErrorCode.NONE);
-			  return infor;
+			  result.setStatusInfo("Y");
+			  result.setStatusCode(StatusCode.NORMAL);
+			  return result;
 		  }else{
-			  infor.setErrorInfo("N");
-			  infor.setStatusCode(ErrorCode.NONE);
-			  return infor;
+			  result.setStatusInfo("N");
+			  result.setStatusCode(StatusCode.NORMAL);
+			  return result;
 		  }
 	  }catch(Exception e){
-		  infor.setErrorInfo("");
-		  infor.setStatusCode(ErrorCode.PERSIST_ERROR);
-		  return infor;
+		  result.setStatusInfo(e.toString());
+		  result.setStatusCode(StatusCode.PERSIST_ERROR);
+		  return result;
 	  }
   }
   
   @RequestMapping(value="/register", method=RequestMethod.POST)
   @ResponseBody
-  public String create(@RequestBody User newUser) {  		  		
-    try {
-      userService.create(newUser);
-    }
-    catch (Exception ex) {
-      return "Error creating the user: " + ex.toString();
-    }
-    return "User succesfully created! (id = " + newUser.getId() + ")";
+  public Infor create(@RequestBody User newUser) {  	
+	  try {
+		  userService.create(newUser);
+	  }
+	  catch (Exception ex) {
+		  return new Infor(ex.toString(),StatusCode.PERSIST_ERROR);
+	  }
+	  return new Infor("Success",StatusCode.NORMAL);
+  }
+  
+  @RequestMapping(value="/login")
+  @ResponseBody
+  public UserInfo getUser(@RequestParam("email")String email, @RequestParam("pwd")String pwd){
+	  try{
+		  final UserInfo result;
+		  final User user=userService.query(email.trim());
+		  if(user!=null&&user.getPassword().equals(pwd)){
+			  result=new UserInfo(user);
+			  result.setStatusInfo("Y");
+			  return result;
+		  }
+		  else{
+			 result=new UserInfo();
+			 result.setStatusInfo("N");
+			 return result;
+		  }
+	  }catch(Exception e){
+		  return new UserInfo(e.toString(),StatusCode.PERSIST_ERROR);
+	  }
   }
   
   @RequestMapping("/delete")
@@ -71,6 +92,7 @@ public class UserController {
     }
     return "User succesfully deleted!";
   }
+  
   /**
    * /get-by-email  --> Return the id for the user having the passed email.
    * 

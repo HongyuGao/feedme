@@ -158,7 +158,5 @@ public void setPhoneNumber(String phoneNumber) {
   
   public void setEmail(String value) {
     this.email = value;
-  }
-
-  
+  }  
 } // class User
