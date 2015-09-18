@@ -2,6 +2,8 @@ package org.foodie.server.controller;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.foodie.server.entity.Dish;
+import org.foodie.server.infor.DishInfo;
+import org.foodie.server.infor.StatusCode;
 import org.foodie.server.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,14 +26,14 @@ public class DishController {
 		
 	@RequestMapping("/newdish")
 	@ResponseBody
-	public Dish create(@RequestBody()Dish newdish){		
+	public DishInfo create(@RequestBody()Dish newdish){		
 		try{
 			dishService.create(newdish);
 		}catch(Exception e){
 			log.error(e);
-			return null;
+			return new DishInfo(e.toString(),StatusCode.PERSIST_ERROR);
 		}
-		return null;
+		return new DishInfo();
 	}
 	
 	@RequestMapping("/delete")
