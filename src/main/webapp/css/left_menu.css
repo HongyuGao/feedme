@@ -10,7 +10,9 @@ a.nav-expander {
   z-index: 12;
 
 }
-
+.list-unstyled{
+  display: block;
+}
 a.nav-expander:hover {
   cursor: pointer;
 }
@@ -29,7 +31,7 @@ nav {
   height: 100%;
   overflow: auto;
   position: fixed;
-  left: -20em;
+  left: 0em;
   font-size: 10px;
   top: 0;
   width: 20em;
@@ -42,15 +44,16 @@ nav {
   margin-top: 50px;
 }
 .nav-expanded nav {
-  left: 0;
+  left: -20em;
 }
 
 body.nav-expanded {
-  margin-left: 0em;
-  transition: left 0.4s ease-in-out 0s;
-  -webkit-transition: left 0.4s ease-in-out 0s;
-  -moz-transition: left 0.4s ease-in-out 0s;
-  -o-transition: left 0.4s ease-in-out 0s;
+  /*margin-left: 0em;*/
+  left:-20em;
+  transition: right 0.4s ease-in-out 0s;
+  -webkit-transition: right 0.4s ease-in-out 0s;
+  -moz-transition: right 0.4s ease-in-out 0s;
+  -o-transition: right 0.4s ease-in-out 0s;
 }
 .float_left{
   margin-top: 5px;
@@ -93,9 +96,23 @@ body.nav-expanded {
 .main-menu .sub-nav {
   border-bottom: 0px;
   padding: 4px;
-  padding-left: 30px;
+  padding-left: 20px;
+  font-size: 14px;
+}
+ .sub-sub-nav {
+  border-bottom: 0px;
+  padding: 4px;
+  font-size: 14px;
 }
 
+hr{
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+ul{
+  list-style-type: none;
+}
 .main-menu a .caret {
 	width: 0;
 	height: 0;

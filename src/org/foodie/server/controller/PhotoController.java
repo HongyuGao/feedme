@@ -1,4 +1,5 @@
 package org.foodie.server.controller;
+
 import java.util.Date;
 import org.foodie.server.service.Photo;
 import org.foodie.server.service.PhotoMetadata;
