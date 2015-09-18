@@ -19,8 +19,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 @Transactional
 public interface UserDao extends CrudRepository<User, Long> {
-  public User findOneByEmail(String email);
-   
-
-} // class UserDao
+	public User findOneByEmail(String email);
+}
   

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.UUID;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -23,8 +22,7 @@ public class PhotoMetadata implements Serializable {
     public static final String PROP_UUID = "uuid";
     public static final String PROP_PERSON_NAME = "person-name";
     public static final String PROP_FILE_NAME = "file-name";
-    public static final String PROP_DOCUMENT_DATE = "document-date";
-    
+    public static final String PROP_DOCUMENT_DATE = "document-date"; 
     public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_PATTERN);
     

@@ -31,8 +31,8 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public User query(String field) {
-		return userDao.findOneByEmail(field);
+	public User query(String email) {
+		return userDao.findOneByEmail(email);
 	}
 	
 	
