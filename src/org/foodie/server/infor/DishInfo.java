@@ -5,6 +5,8 @@ package org.foodie.server.infor;
 public class DishInfo extends Infor{
 	private long id;
 	
-	
+	public DishInfo(){
+		
+	}
 
 }
