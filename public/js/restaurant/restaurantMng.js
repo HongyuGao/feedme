@@ -91,7 +91,7 @@ function addDish(){
 			dish.ingredient=ingredient;
 			dish.description=description;
 			var putData=JSON.stringify(dish);
-			//restSet("/dishs/newdish", POST_METHOD, putData, renderAddDish,"#resultDiv3");
+			restSet("/dishs/newdish", POST_METHOD, putData, renderAddDish,"#resultDiv3");
 		}else{
 			jQuery("#resultDiv3").html("Name, type and price can't be empty");
 		}		
