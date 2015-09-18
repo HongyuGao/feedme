@@ -72,17 +72,34 @@ function renderUpdate(data){
 }
 
 function addDish(){
-	//var 
-	//if(){
-	//	restSet("/dishs/newdish", POST_METHOD, putData, renderAddDish,"#resultDiv3");
-	//}else{
-	//	jQuery("#resultDiv3")
-	//}
-	
+	var Sid=storage.getItem("restaurantId");
+	if (Did!=null){
+		var name=jQuery.trim(jQuery("#dName").val());
+		var type=jQuery.trim(jQuery("#dType").val());
+		var price=jQuery.trim(jQuery("#dPrice").val());
+
+		if(name!=null&&type!=null&&price!=null){
+			var ingredient=jQuery.trim(jQuery("#dIngredient").val()); 
+			var description=jQuery.trim(jQuery("#dDiscount").val());
+			var discount=jQuery.trim(jQuery("#dDiscount").val());
+			var dish=new Object();
+			dish.shopId=Sid;
+			dish.name=name;
+			dish.type=type;
+			dish.price=price;
+			dish.discount=discount;
+			dish.ingredient=ingredient;
+			dish.description=description;
+			var putData=JSON.stringify(dish);
+			restSet("/dishs/newdish", POST_METHOD, putData, renderAddDish,"#resultDiv3");
+		}else{
+			jQuery("#resultDiv3").html("Name, type and price can't be empty");
+		}		
+	}	
 }
 
 function renderAddDish(data){
-	
+	jQuery("#resultDiv3").html("Success");
 }
 
 function clean(){

@@ -59,10 +59,8 @@ public class DishController {
 	
 	@RequestMapping("/query")
 	@ResponseBody
-	public List<Dish> query(/*@RequestParam("shop_id")long shopid*/){
+	public List<Dish> query(@RequestParam("shopId")long shopid){
 		List<Dish> dishes =null;
-		//test data
-		long shopid = 2;
 		try{
 			dishes = dishService.query(shopid);
 		}catch(Exception e){
