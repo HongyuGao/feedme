@@ -5,14 +5,14 @@
 		<title>Restaurants Management</title>
 		<style type="text/css">
 			body{text-align:center}
-			.page{margin:0 auto; width:1000px;height:1000px; border:1px solid #ccc;}
+			.page{margin:0 auto; width:1200px;height:800px; border:1px solid #ccc;}
 			.header{height:4%;border-bottom:1px solid #ccc;}
-			.MainContainer{height:96%; width:1000px;}
+			.MainContainer{height:96%; width:1200px;}
 			.firCol{float:left; height:100%; width:200px; border-right:1px solid #ccc;}
-			.secCol{float:left; height:100%; width:397px; border-right:1px solid #ccc;}
-			.thiCol{float:left; height:100%; width:397px;}
-			.firRow{height:35%; width:100%; border-bottom:1px solid #ccc;}
-			.secRow{height:65%; width:100%;}
+			.secCol{float:left; height:100%; width:380px; border-right:1px solid #ccc;}
+			.thiCol{float:left; height:100%; width:615px;}
+			.firRow{height:40%; width:100%; border-bottom:1px solid #ccc;}
+			.secRow{height:60%; width:100%;}
 		</style>
 		<script src="js/webjars/jquery.js"></script>
 		<script src="js/commonRest.js"></script>
@@ -74,7 +74,7 @@
             		</div>
             		<div class="secRow" id="newDish" align="center">
             			<label>Add A New Dish</label><br/>
-            			<div id="resultDiv3" style="color:read"></div>
+            			<div id="resultDiv3" style="color:red"></div>
             			<table style="border:1px solid #ccc">
             				<tr>
             					<td>photo:</td>
@@ -86,7 +86,15 @@
             				</tr>
             				<tr>
             					<td>type:</td>
-            					<td><input id="dType"/></td>
+            					<td>
+            						<select id="dType">
+            							<option>Soup</option>
+            							<option>Dessert</option>
+            							<option>Staple</option>
+            							<option>Drinks</option>
+            							<option>Others</option>
+            						</select>
+            					</td>
             				</tr>
             				<tr>
             					<td>price:</td>
@@ -105,18 +113,31 @@
             					<td><input id="dDescription"/></td>
             				</tr>
             				<tr>
-            					<td><button onclick="addDish()"'>Add</button></td>
+            					<td><button onclick="addDish()">Add</button></td>
             					<td><button onclick="clean()">Clean</button></td>
             				</tr>
             			</table>           		
             		</div>   
             	</div> 
-            	<div class="thiCol" id="disM">Dishes</div>       
+            	<div class="thiCol" style="border: 1px solid red;">
+            		<label>Dishes</label>
+            		<div id="resultDiv4" style="color:red;"></div>
+            		<div>Soup</div>
+            		<div id="Soup"></div>
+            		<div>Dessert</div>
+            		<div id="Dessert"></div>
+            		<div>Staple</div>
+            		<div id="Staple"></div>
+            		<div>Drink</div>
+       				<div id="Drinks"></div>
+       				<div>Others</div>
+            		<div id="Others"></div>
+            	</div>       
         	</div>            	    	
     	</div>   	
     	<script>
     		jQuery(document).ready(function () {
-    			//loadRestaurants()
+    			loadRestaurants();
         	});
 		</script>
 	</body>
