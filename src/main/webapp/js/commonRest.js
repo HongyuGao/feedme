@@ -26,18 +26,22 @@ function restSet(restUrl, httpMethod, entity, callback, resultDiv) {
 }
 
 function rest(restUrl, httpMethod, entity, contentType, dataType, callback, resultDiv) {
-    var resultLine = jQuery(resultDiv);
+	if (resultLine!=""){
+		var resultLine = jQuery(resultDiv);
+	}
     resultLine.html(LOADING);
     var request = jQuery.ajax({type: httpMethod, url: restUrl, data: entity, contentType: contentType, dataType: dataType});
     request.done(function (data) {
         try {
             if (data === null || data === undefined) {
-                resultLine.html(NO_RESULT);
+            	if(resultLine!=null)
+            		resultLine.html(NO_RESULT);
             } else if (data.statusCode && data.statusCode != NORMAL_STATUS) {
-                resultLine.html("StatusCode:"+data.statusCode+"  " + data.statusInfo);
+            	if(resultLine!=null)
+            		resultLine.html("StatusCode:"+data.statusCode+"  " + data.statusInfo);
             } else if (callback != null) {
-            	console.log("success return");
-                resultLine.html("");
+            	if(resultLine!=null)
+            		resultLine.html("");
                 callback(data);
             }
         } catch (e) {
@@ -47,7 +51,7 @@ function rest(restUrl, httpMethod, entity, contentType, dataType, callback, resu
     request.fail(function (textStatus, errorThrown) {
         resultLine.html(errorThrown + " status=" + textStatus.status + " text=" + textStatus.statusText);
     });
-    resultLine.append(" DONE!");
+   // resultLine.append(" DONE!");
 }
 
 function checkSignIn() {
