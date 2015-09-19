@@ -23,10 +23,10 @@
 							<i class="fa fa-angle-down"></i>
 						</i>
 					<ul class="list-unstyled" data-index="0" style="display:block" >
-		    	<a href="#"><li class="sub-sub-nav"> China <span class="icon"></span></li></a>
-		    	<a href="#"><li class="sub-sub-nav"> India <span class="icon"></span></li></a>
-		    	<a href="#"><li class="sub-sub-nav"> Korea <span class="icon"></span></li></a>
-					<a href="#"><li class="sub-sub-nav"> Singapore <span class="icon"></span></li></a>
+		    	<a href="#"><li class="sub-sub-nav" data-type="china" data-status="open"> China <span class="icon"></span></li></a>
+		    	<a href="#"><li class="sub-sub-nav" data-type="india" data-status="open"> India <span class="icon"></span></li></a>
+		    	<a href="#"><li class="sub-sub-nav" data-type="korea" data-status="open"> Korea <span class="icon"></span></li></a>
+					<a href="#"><li class="sub-sub-nav" data-type="singapore" data-status="open"> Singapore <span class="icon"></span></li></a>
 					</ul>
 				</li>
 				</a>
@@ -120,6 +120,9 @@
 <div id="foot">
 
 </div>
+<div id="info">
+
+</div>
 
 	<!-- script references -->
 	<script src="js/webjars/jquery.min.js"></script>
@@ -129,6 +132,7 @@
 	<script src="js/commonPath.js"></script>
 	<script src="js/restaurant.js"></script>
 	<script>
+	window.restaurantsType = {};
 		$(document).ready(function(){
        //Navigation Menu Slider
         $('#nav-expander').on('click',function(e){
@@ -140,11 +144,6 @@
       		$('body').toggleClass('nav-expanded');
       	});
        });
-
-
-
-
-
 
 		$(window).load(function(){
 			// $('#shops').load('restaurants.html');
@@ -207,24 +206,52 @@
 	}
 
 		$(window).load(function(){
-			restGet('http://localhost:8080/restaurants/restaurantList',GET_METHOD, function(data){
+			restGet(TEXT_HOST+'/restaurants/allRestaurant',GET_METHOD, function(data){
 				$.each(data, function(i, restaurant){
 					shopAppend(restaurant);
+					if(restaurant.type!=null || restaurant.type != ''){
+					window.restaurantsType[restaurant.type] = restaurant.type;
 					// $('#shops').append('DDDDD:'+restaurant.name);
+				}
 				});
 
-			}, '');
+			}, '#info');
 		});
 
 		$(window).load(function(){
-			restGet('http://localhost:8080/dishes/query',GET_METHOD, function(data){
+			restGet(TEXT_HOST+'/dishes/query/?shopId=2',GET_METHOD, function(data){
 				$.each(data, function(i, dish){
 					dishAppend(dish);
 					// $('#shops').append('DDDDD:'+restaurant.name);
 				});
 
-			}, '')
-		})
+			}, '#info')
+		});
+		//restaurants fillter by click left menu
+		$(window).load(function(){
+			$(".sub-sub-nav").on('click', function(){
+				//get all of type of restaurants
+				//var types = ["type2", "type3"];
+				console.log(window.restaurantsType);
+				var current_type = $(this).data("type");
+				console.log("current type: "+current_type);
+				$.each(window.restaurantsType, function(i, type){
+					console.log("iterator type: "+type);
+					var status = $("."+type).data("status");
+					console.log("iterator status: "+status);
+					if(type!==current_type && status==="open"){
+						console.log("hide type: "+type);
+						$("."+type).hide(300);
+						$("."+type).data('status', 'close');
+					}
+					if(type===current_type && status==="close"){
+						$("."+current_type).show(300);
+						$("."+current_type).data('status', 'open');
+					}
+
+				});
+			})
+		});
   </script>
 	</body>
 </html>

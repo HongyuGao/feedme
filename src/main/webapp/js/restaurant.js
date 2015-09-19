@@ -1,8 +1,9 @@
 function shopAppend(restaurant) {
   $('#shops').append(
-    "<a href=''>" + "<div class='shop col-xs-4'>" +
-    "<div class='shop_img col-xs-6'>" + "<img src='" + FEEDME_USER_HOST +
-    "data/img/" + restaurant.logo + "' class='img-responsive' alt='...'>" +
+    "<a href=''>" + "<div class='shop col-xs-4 " + restaurant.country + " " +
+    restaurant.type + "' data-status='open'>" +
+    "<div class='shop_img col-xs-6'>" + "<img src='" + PICTURE_HOST +
+    "/data/img/" + restaurant.logo + "' class='img-responsive' alt='...'>" +
     "<div class='open_time'>" + "Open Time:" +
     "<li class='fa fa-clock-o'> 11:00 am - 02:00 pm</li>" +
     "<li class='fa fa-clock-o'> 04:00 pm - 09:00 pm</li>" + "</div>" +
@@ -28,8 +29,8 @@ function dishAppend(dish) {
   $("#dishes").append(
     "<div class='col-xs-3 dish_detail' id='dish_id1'>" +
     "<div class='thumbnail'>" +
-    "<img src='" + FEEDME_USER_HOST +
-    "data/img/" + dish.photo + "'  alt='...'>" +
+    "<img src='" + PICTURE_HOST +
+    "/data/img/" + dish.photo + "'  alt='...'>" +
     "<div class='caption'>" +
     "<div class='dish_name'>" + dish.name + "</div>" +
     "<div class='star'>" +
